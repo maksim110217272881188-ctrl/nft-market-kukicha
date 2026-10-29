@@ -5,168 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090909">
+  <meta
+    name="description"
+    content="NFT MARKET KUKICHA — маркетплейс цифровых коллекционных предметов."
+  >
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
   <title>NFT MARKET KUKICHA</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  <!-- Подключение отдельного файла дизайна -->
+  <link rel="stylesheet" href="styles.css">
 
-    body {
-      margin: 0;
-      background: #090909;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      padding: 20px;
-      border-bottom: 1px solid #3c3018;
-    }
-
-    .logo {
-      color: #f5c451;
-      font-size: 21px;
-      font-weight: 900;
-    }
-
-    .balance {
-      padding: 10px 14px;
-      border: 1px solid #8c6b25;
-      border-radius: 12px;
-      color: #f5c451;
-    }
-
-    main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 24px 16px;
-    }
-
-    .hero {
-      padding: 35px 24px;
-      border: 1px solid #5b451d;
-      border-radius: 22px;
-      background: linear-gradient(130deg, #211a0b, #101010 65%);
-    }
-
-    .tag {
-      color: #f5c451;
-      font-size: 12px;
-      letter-spacing: 2px;
-    }
-
-    h1 {
-      margin: 14px 0;
-      font-size: clamp(30px, 7vw, 52px);
-    }
-
-    h1 span {
-      color: #f5c451;
-    }
-
-    p {
-      color: #aaa;
-      line-height: 1.6;
-    }
-
-    button {
-      padding: 12px 17px;
-      border: 0;
-      border-radius: 10px;
-      background: #f5c451;
-      color: #111;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin: 30px 0 16px;
-    }
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .filters button {
-      border: 1px solid #333;
-      background: #191919;
-      color: #ddd;
-    }
-
-    .filters button.active {
-      background: #f5c451;
-      color: #111;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      padding: 14px;
-      border: 1px solid #292929;
-      border-radius: 17px;
-      background: #121212;
-    }
-
-    .art {
-      display: grid;
-      height: 150px;
-      place-items: center;
-      border-radius: 12px;
-      background: radial-gradient(circle, #55401a, #19140b 65%);
-      font-size: 58px;
-    }
-
-    .card h3 {
-      margin-bottom: 6px;
-    }
-
-    .card p {
-      margin-top: 0;
-      font-size: 14px;
-    }
-
-    .price {
-      margin: 14px 0;
-      color: #f5c451;
-      font-weight: bold;
-    }
-
-    .card > button {
-      width: 100%;
-    }
-
-    .note {
-      margin-top: 22px;
-      padding: 14px;
-      border-radius: 12px;
-      background: #151515;
-      color: #aaa;
-      font-size: 13px;
-    }
-
-    footer {
-      padding: 28px 15px;
-      color: #666;
-      text-align: center;
-    }
-  </style>
+  <!-- Иконка вкладки, без внешних зависимостей -->
+  <link
+    rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='85'%3E%F0%9F%91%91%3C/text%3E%3C/svg%3E"
+  >
 </head>
 
 <body>
@@ -189,82 +43,121 @@
         в NFT MARKET KUKICHA.
       </p>
 
-      <button id="open-market">Открыть маркет</button>
+      <button id="open-market" type="button">
+        Открыть маркет
+      </button>
     </section>
 
-    <div class="section-head" id="market">
-      <h2>🔥 Маркетплейс</h2>
+    <section aria-labelledby="market-title">
+      <div class="section-head" id="market">
+        <h2 id="market-title">🔥 Маркетплейс</h2>
 
-      <div class="filters">
-        <button class="active" data-filter="all">Все</button>
-        <button data-filter="gift">Подарки</button>
-        <button data-filter="nft">NFT</button>
-        <button data-filter="skin">Скины</button>
+        <div class="filters" aria-label="Фильтр предметов">
+          <button
+            class="active"
+            data-filter="all"
+            type="button"
+            aria-pressed="true"
+          >Все</button>
+
+          <button
+            data-filter="gift"
+            type="button"
+            aria-pressed="false"
+          >Подарки</button>
+
+          <button
+            data-filter="nft"
+            type="button"
+            aria-pressed="false"
+          >NFT</button>
+
+          <button
+            data-filter="skin"
+            type="button"
+            aria-pressed="false"
+          >Скины</button>
+        </div>
       </div>
-    </div>
 
-    <input
-      id="search"
-      type="search"
-      placeholder="🔎 Поиск предметов..."
-      aria-label="Поиск предметов"
-      style="width:100%;padding:14px;margin:0 0 16px;border-radius:10px;border:1px solid #5b451d;background:#151515;color:white;font-size:16px;"
-    >
+      <label for="search" class="visually-hidden">
+        Поиск предметов
+      </label>
 
-    <section class="grid" id="items">
-      <article class="card" data-type="gift">
-        <div class="art">🎁</div>
-        <h3>Golden Gift</h3>
-        <p>Коллекционный подарок · демо</p>
-        <div class="price">⭐ 25 Stars</div>
-        <button class="details-button" data-name="Golden Gift">
-          Подробнее
-        </button>
-      </article>
+      <input
+        id="search"
+        type="search"
+        placeholder="🔎 Поиск предметов..."
+        autocomplete="off"
+      >
 
-      <article class="card" data-type="nft">
-        <div class="art">💎</div>
-        <h3>Diamond #001</h3>
-        <p>Цифровой коллекционный предмет · демо</p>
-        <div class="price">◈ 0.5 TON</div>
-        <button class="details-button" data-name="Diamond #001">
-          Подробнее
-        </button>
-      </article>
+      <section class="grid" id="items" aria-label="Предметы">
+        <article class="card" data-type="gift">
+          <div class="art" aria-hidden="true">🎁</div>
+          <h3>Golden Gift</h3>
+          <p>Коллекционный подарок · демо</p>
+          <div class="price">⭐ 25 Stars</div>
+          <button
+            class="details-button"
+            data-name="Golden Gift"
+            type="button"
+          >Подробнее</button>
+        </article>
 
-      <article class="card" data-type="skin">
-        <div class="art">🎮</div>
-        <h3>Neon Skin</h3>
-        <p>Вымышленный игровой скин · демо</p>
-        <div class="price">⭐ 40 Stars</div>
-        <button class="details-button" data-name="Neon Skin">
-          Подробнее
-        </button>
-      </article>
+        <article class="card" data-type="nft">
+          <div class="art" aria-hidden="true">💎</div>
+          <h3>Diamond #001</h3>
+          <p>Цифровой коллекционный предмет · демо</p>
+          <div class="price">◈ 0.5 TON</div>
+          <button
+            class="details-button"
+            data-name="Diamond #001"
+            type="button"
+          >Подробнее</button>
+        </article>
 
-      <article class="card" data-type="gift">
-        <div class="art">🌹</div>
-        <h3>Ruby Rose</h3>
-        <p>Коллекционный подарок · демо</p>
-        <div class="price">⭐ 15 Stars</div>
-        <button class="details-button" data-name="Ruby Rose">
-          Подробнее
-        </button>
-      </article>
+        <article class="card" data-type="skin">
+          <div class="art" aria-hidden="true">🎮</div>
+          <h3>Neon Skin</h3>
+          <p>Вымышленный игровой скин · демо</p>
+          <div class="price">⭐ 40 Stars</div>
+          <button
+            class="details-button"
+            data-name="Neon Skin"
+            type="button"
+          >Подробнее</button>
+        </article>
+
+        <article class="card" data-type="gift">
+          <div class="art" aria-hidden="true">🌹</div>
+          <h3>Ruby Rose</h3>
+          <p>Коллекционный подарок · демо</p>
+          <div class="price">⭐ 15 Stars</div>
+          <button
+            class="details-button"
+            data-name="Ruby Rose"
+            type="button"
+          >Подробнее</button>
+        </article>
+      </section>
     </section>
 
-    <div class="note">
-      ⚠️ Демоверсия маркетплейса. Баланс и цены условные.
-      Реальные покупки, переводы Stars/TON и подключение кошелька
-      пока не реализованы.
-    </div>
+    <p id="empty-results" hidden>
+      Ничего не найдено. Попробуй изменить запрос.
+    </p>
+
+    <aside class="note">
+      ⚠️ Демоверсия NFT MARKET KUKICHA. Баланс и цены условные.
+      Реальные покупки, переводы Stars/TON, аккаунты и подключение
+      кошелька пока не реализованы.
+    </aside>
   </main>
 
   <footer>
     © 2026 NFT MARKET KUKICHA
   </footer>
 
-  <!-- JavaScript подключим отдельно после подготовки app.js -->
-  <script src="app.js"></script>
+  <!-- Подключение отдельного JavaScript -->
+  <script src="app.js" defer></script>
 </body>
 </html>
