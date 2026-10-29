@@ -1,16 +1,26 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const cards = [...document.querySelectorAll(".card")];
-  const filters = [...document.querySelectorAll("[data-filter]")];
+  const filterButtons = [
+    ...document.querySelectorAll("[data-filter]")
+  ];
+  const searchInput = document.querySelector("#search");
+  const openMarketButton = document.querySelector("#open-market");
 
   let currentFilter = "all";
 
-  // Поиск товаров
-  const search = document.querySelector("#search");
+  // Открыть маркетплейс
+  openMarketButton?.addEventListener("click", () => {
+    document.querySelector("#market")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
 
+  // Поиск и фильтры
   function updateCards() {
-    const query = search
-      ? search.value.trim().toLowerCase()
+    const query = searchInput
+      ? searchInput.value.trim().toLowerCase()
       : "";
 
     cards.forEach(card => {
@@ -26,65 +36,86 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Фильтры: все, подарки, NFT, скины
-  filters.forEach(button => {
+  filterButtons.forEach(button => {
     button.addEventListener("click", () => {
       currentFilter = button.dataset.filter || "all";
 
-      filters.forEach(item => item.classList.remove("active"));
-      button.classList.add("active");
+      filterButtons.forEach(item => {
+        item.classList.toggle("active", item === button);
+      });
 
       updateCards();
     });
   });
 
-  // Поле поиска должно иметь id="search"
-  if (search) {
-    search.addEventListener("input", updateCards);
-  }
+  searchInput?.addEventListener("input", updateCards);
 
-  // Избранное
+  // Избранное с сохранением в браузере
   cards.forEach(card => {
-    const title =
-      card.querySelector("h3")?.textContent || "Предмет";
+    const name =
+      card.querySelector("h3")?.textContent.trim() || "Предмет";
 
-    const key = "kukicha-favorite-" + title;
+    const storageKey = "kukicha-favorite-" + name;
+    let isFavorite = localStorage.getItem(storageKey) === "true";
 
-    const button = document.createElement("button");
-    button.className = "favorite-button";
-    button.style.cssText = "width:100%;margin-top:8px;";
-    
-    let saved = localStorage.getItem(key) === "true";
+    const favoriteButton = document.createElement("button");
+    favoriteButton.type = "button";
+    favoriteButton.className = "favorite-button";
+    favoriteButton.style.cssText =
+      "width:100%;margin-top:8px;background:#252016;color:#f5c451;";
 
-    function updateButton() {
-      button.textContent = saved
+    function updateFavoriteButton() {
+      favoriteButton.textContent = isFavorite
         ? "♥ В избранном"
         : "♡ В избранное";
+
+      favoriteButton.setAttribute(
+        "aria-pressed",
+        String(isFavorite)
+      );
     }
 
-    updateButton();
+    updateFavoriteButton();
 
-    button.addEventListener("click", () => {
-      saved = !saved;
-      localStorage.setItem(key, String(saved));
-      updateButton();
+    favoriteButton.addEventListener("click", () => {
+      isFavorite = !isFavorite;
+
+      try {
+        localStorage.setItem(storageKey, String(isFavorite));
+      } catch (error) {
+        console.warn("Не удалось сохранить избранное", error);
+      }
+
+      updateFavoriteButton();
     });
 
-    card.appendChild(button);
+    card.appendChild(favoriteButton);
   });
 
   // Информация о товаре
-  window.showInfo = function(name) {
-    alert(
-      name +
-      "\n\nNFT MARKET KUKICHA" +
-      "\nДемонстрационный предмет." +
-      "\nРеальные покупки пока не подключены."
-    );
-  };
+  document.querySelectorAll(".details-button").forEach(button => {
+    button.addEventListener("click", () => {
+      const name = button.dataset.name || "Предмет";
 
+      const card = button.closest(".card");
+      const description =
+        card?.querySelector("p")?.textContent || "";
+
+      const price =
+        card?.querySelector(".price")?.textContent || "";
+
+      alert(
+        name +
+        "\n" + description +
+        "\n" + price +
+        "\n\nЭто демонстрационный предмет." +
+        "\nРеальная покупка пока недоступна."
+      );
+    });
+  });
+
+  // Первоначальное отображение
   updateCards();
 
   console.log("NFT MARKET KUKICHA загружен!");
 });
-    
